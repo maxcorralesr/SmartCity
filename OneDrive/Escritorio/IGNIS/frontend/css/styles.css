@@ -1,0 +1,251 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #0f1419;
+  color: #e7e9ea;
+  min-height: 100vh;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  padding: 0.75rem 1.5rem;
+  background: #1a1f26;
+  border-bottom: 1px solid #2f3640;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  color: #8b98a5;
+}
+
+.ws-status {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #8b98a5;
+}
+
+.ws-status.connected {
+  color: #00ba7c;
+}
+
+.ws-status.error {
+  color: #f4212e;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  position: relative;
+  min-height: 0;
+  height: calc(100vh - 120px);
+}
+
+.map {
+  flex: 1;
+  min-height: 300px;
+  height: 100%;
+  width: 100%;
+  background: #1a1f26;
+  z-index: 1;
+}
+
+#map.leaflet-container {
+  font: inherit;
+}
+
+.panel {
+  width: 360px;
+  background: #1a1f26;
+  border-left: 1px solid #2f3640;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.panel.closed {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transform: translateX(100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #2f3640;
+}
+
+.panel-header h2 {
+  margin: 0;
+  font-size: 1.125rem;
+}
+
+.btn-close {
+  background: none;
+  border: none;
+  color: #8b98a5;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0 0.25rem;
+  line-height: 1;
+}
+
+.btn-close:hover {
+  color: #e7e9ea;
+}
+
+#panel-content {
+  padding: 1.25rem;
+  overflow-y: auto;
+}
+
+.compliance-block,
+.telemetry-block,
+.alert-block {
+  margin-bottom: 1.25rem;
+}
+
+.compliance-block h3,
+.telemetry-block h3,
+.alert-block h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.875rem;
+  color: #8b98a5;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.compliance-block .estado {
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.compliance-block .estado.aprobado {
+  background: rgba(0, 186, 124, 0.2);
+  color: #00ba7c;
+}
+
+.compliance-block .estado.vencido {
+  background: rgba(244, 33, 46, 0.2);
+  color: #f4212e;
+}
+
+#panel-last-reading {
+  font-size: 0.875rem;
+  color: #8b98a5;
+}
+
+.alert-block {
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: rgba(244, 33, 46, 0.15);
+  border: 1px solid rgba(244, 33, 46, 0.4);
+}
+
+.alert-block .protocolo {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.emergency-toast {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 90%;
+  padding: 1rem 1.5rem;
+  background: #f4212e;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+/* Pines del mapa: mismo tamaño, sin animación brusca; permitir clic */
+.custom-pin.leaflet-marker-icon {
+  pointer-events: auto !important;
+}
+
+.pin-normal,
+.pin-warning,
+.pin-alert {
+  box-sizing: border-box;
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+
+.pin-normal {
+  background-color: #00ba7c;
+}
+
+.pin-warning {
+  background-color: #e6a800;
+}
+
+.pin-alert {
+  background-color: #c41e3a;
+  box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.4);
+  animation: alert-pulse 2s ease-in-out infinite;
+}
+
+@keyframes alert-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 30, 58, 0.35); }
+  50%  { box-shadow: 0 0 0 8px rgba(196, 30, 58, 0); }
+}
+
+.leaflet-popup-content-wrapper {
+  background: #1a1f26;
+  color: #e7e9ea;
+  border-radius: 8px;
+  border: 1px solid #2f3640;
+}
+
+.leaflet-popup-tip {
+  background: #1a1f26;
+}
+
+.chart-container {
+  position: relative;
+  height: 160px;
+  margin-top: 0.5rem;
+}

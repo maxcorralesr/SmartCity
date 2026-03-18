@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IGNIS - Smart City Hermosillo</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="header">
+      <h1>IGNIS</h1>
+      <p class="subtitle">Monitoreo en vivo · Hermosillo</p>
+      <div id="ws-status" class="ws-status">Conectando...</div>
+    </header>
+    <main class="main">
+      <div id="map" class="map"></div>
+      <aside id="panel" class="panel closed">
+        <div class="panel-header">
+          <h2 id="panel-title">Sucursal</h2>
+          <button id="panel-close" class="btn-close" aria-label="Cerrar">&times;</button>
+        </div>
+        <div id="panel-content">
+          <div id="panel-compliance" class="compliance-block"></div>
+          <div id="panel-telemetry" class="telemetry-block">
+            <h3>Última lectura</h3>
+            <div id="panel-last-reading"></div>
+          </div>
+          <div id="panel-alert" class="alert-block hidden"></div>
+        </div>
+      </aside>
+    </main>
+    <div id="emergency-toast" class="emergency-toast hidden"></div>
+  </div>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="js/websocket.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
